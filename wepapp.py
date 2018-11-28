@@ -29,12 +29,23 @@ def render_creed():
     print(str)
     return render_template('bam.html', strr = Markup(str))
 
-def pop(states):
-    states = population["2014 Population"]
-    for pop in states:
-        if pop["population2014"] > first:
-            first = states["population"]
-    return first
+def pop(state):
+    Sp = 0
+    for pop in counties:
+        if pop["State"] == state:
+            Sp = Sp + pop["Population"]["2014 Population"]
+    return "Population:" + " " + str(Sp) 
     
-    if __name__=="__main__":
+@app.route("/wutu")
+def render_ahj():
+    str = ""
+    for cc in get_states_opions():
+        str += toOption(cc)
+    chosenstate = request.args["States"]
+    funfact = pop(chosenstate)
+
+    print(str)
+    return render_template('bam.html', strr = Markup(str), angh = funfact)    
+    
+if __name__=="__main__":
     app.run(debug=True, port=54321)
